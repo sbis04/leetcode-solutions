@@ -3,9 +3,9 @@ package com.techmisal.medium;
 import java.util.*;
 
 public class MinimumHeightTree {
-    private Integer vertices;
     private Integer[] degrees;
     private ArrayList<ArrayList<Integer>> adjacents = new ArrayList<>();
+    private Integer vertices;
 
     private void addEdge(int[][] edges) {
         for (int[] edge : edges) {
@@ -29,30 +29,37 @@ public class MinimumHeightTree {
     }
 
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        LinkedList<Integer> result = new LinkedList();
+
+        if (n == 1) {
+            result.add(0);
+            return result;
+        }
+
         initSolution(n);
         addEdge(edges);
 
-        LinkedList<Integer> queue = new LinkedList();
-        for (int x = 0; x < vertices; x++){
-            if (degrees[x] == 1){
-                queue.add(x);
+
+        for (int x = 0; x < vertices; x++) {
+            if (degrees[x] == 1) {
+                result.add(x);
             }
         }
 
         while (vertices > 2) {
-            vertices = vertices - queue.size();
+            vertices = vertices - result.size();
             LinkedList<Integer> newQueue = new LinkedList<>();
-            for(int l: queue) {
-                int neighbor = adjacents.get(l).iterator().next();
+            for (int first : result) {
+                int neighbor = adjacents.get(first).iterator().next();
                 degrees[neighbor]--;
-                if(degrees[neighbor] == 1)
+                if (degrees[neighbor] == 1)
                     newQueue.add(neighbor);
 
             }
-            queue = newQueue;
+            result = newQueue;
         }
 
-        return queue;
+        return result;
 
     }
 }
