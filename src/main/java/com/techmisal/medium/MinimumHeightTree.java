@@ -24,7 +24,7 @@ public class MinimumHeightTree {
         degrees = new Integer[n];
         for (int x = 0; x < n; x++) {
             degrees[x] = 0;
-            adjacents.add(new ArrayList<Integer>());
+            adjacents.add(new ArrayList<>());
         }
     }
 
@@ -32,7 +32,7 @@ public class MinimumHeightTree {
         initSolution(n);
         addEdge(edges);
 
-        LinkedList queue = new LinkedList();
+        LinkedList<Integer> queue = new LinkedList();
         for (int x = 0; x < vertices; x++){
             if (degrees[x] == 1){
                 queue.add(x);
@@ -41,26 +41,15 @@ public class MinimumHeightTree {
 
         while (vertices > 2) {
             vertices = vertices - queue.size();
-            for (int x = 0; x < queue.size(); x++) {
-                System.out.println("QUEUE SIZE " + queue.size());
-                Integer top = (Integer) queue.getFirst();
-                System.out.println(top);
-                queue.removeFirst();
+            LinkedList<Integer> newQueue = new LinkedList<>();
+            for(int l: queue) {
+                int neighbor = adjacents.get(l).iterator().next();
+                degrees[neighbor]--;
+                if(degrees[neighbor] == 1)
+                    newQueue.add(neighbor);
 
-                vertices--;
-                System.out.println("DECREMENTING " + vertices);
-
-                ArrayList currentAdjacent = adjacents.get(top);
-                for (int j = 0; j < currentAdjacent.size(); j++) {
-                    System.out.println("Getting adjacents of..." + top);
-                    int neighbor = (Integer)currentAdjacent.get(j);
-                    degrees[neighbor]--;
-                    if(degrees[neighbor]==1){
-                        System.out.println("WQWQWQ got here" + neighbor);
-                        queue.addLast(neighbor);
-                    }
-                }
             }
+            queue = newQueue;
         }
 
         return queue;
