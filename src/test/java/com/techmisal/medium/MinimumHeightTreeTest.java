@@ -59,7 +59,7 @@ public class MinimumHeightTreeTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-    @Test @Ignore /*TODO, failing case*/
+    @Test
     public void addFailingTestCaseFromJudge() {
         int n = 11;
         int[][] vertices = {{0, 1}, {0, 2}, {2, 3}, {0, 4}, {2, 5}, {5, 6}, {3, 7}, {6, 8}, {8, 9}, {9, 10}};
